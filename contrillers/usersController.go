@@ -1,7 +1,6 @@
 package contrillers
 
 import (
-	"fmt"
 	"main/models"
 	"net/http"
 
@@ -50,7 +49,7 @@ func RegisterHandler(c *gin.Context) {
 	//添加到模拟数据库
 	addUserDb := models.User{Username: registerRequest.Username, Password: string(hash)}
 	users = append(users, addUserDb)
-	fmt.Println(users)
+
 	// // 生成JWT Token
 	// expirationTime := time.Now().Add(24 * time.Hour) // Token有效期为24小时
 	// claims := &models.Claims{
