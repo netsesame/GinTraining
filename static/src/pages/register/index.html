@@ -1,0 +1,58 @@
+<style type="text/css">
+    
+</style>
+<div class="bui-page bui-box-vertical">
+    <header>
+       <div class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">注册页</div>
+        <div class="bui-bar-right">
+            <!-- 右边按钮 -->
+        </div>
+       </div>
+    </header>
+    <main>
+        <!-- 正文内容 -->
+        <ul class="bui-list">
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">
+                    <div id="uiDropdown" class="bui-dropdown">
+                        <div class="bui-btn bui-box" >
+                            <div class="span1">请选择</div>
+                            <i class="icon-dropdown"></i>
+                        </div>
+                    </div>
+                </label>
+                <div class="span1">
+                    <div class="bui-input user-input">
+                        <input type="text" name="username" placeholder="请输入手机号" b-model="register.userinfo.username" b-blur="register.check" rule="^1\d{10}" tip="请输入正确的手机号">
+                        <i class="icon-remove" b-show="register.userinfo.username" b-click="register.clear('userinfo.username')"></i>
+                    </div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box clearactive">
+                <div class="span1">
+                    <div class="bui-input password-input">
+                        <input type="password" name="password" b-type="register.passtype" placeholder="请输入密码" b-model="register.userinfo.password" b-blur="register.check" rule="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$" tip="密码由6-20位字母+数字组成">
+                        <i class="icon-eye" b-show="register.userinfo.password" b-click="register.changetype()"></i>
+                        <i class="icon-remove" b-show="register.userinfo.password" b-click="register.clear('userinfo.password')"></i>
+                    </div>
+                </div>
+            </li>
+            <li class="bui-btn bui-box clearactive">
+                <div class="span1">
+                    <div class="bui-input">
+                        <input type="text" name="code" placeholder="请输入验证码" b-model="register.userinfo.code" maxlength="4">
+                        <i class="icon-remove" b-show="register.userinfo.code" b-click="register.clear('userinfo.code')"></i>
+                    </div>
+                </div>
+                <div class="bui-btn primary-reverse mini ring" b-class="register.btnsend.disabled" b-text="register.btnsend.text" b-click="register.sendcode">发送验证码</div>
+            </li>
+        </ul>
+        <div class="container-xy">
+            <div class="bui-btn round primary" b-click="register.submit">注册</div>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,171 @@
+<style type="text/css">
+    .page-personal .personal-header {
+        background-color: #39a4ff;
+        /*background-image: linear-gradient(to bottom, #7cb8e9, #89bfe3, #72a8d7, #89b5d8, #92bbda);*/
+        padding-top: .3rem;
+        padding-bottom: .3rem;
+    }
+    
+    .page-personal .personal-header .personal-img {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        background: #fff;
+        /* border: 2px solid #fff; */
+        overflow: hidden;
+        margin: 0 auto .2rem auto;
+        text-align: center;
+    }
+    
+    .page-personal .personal-header .personal-img img {
+        width: 100%;
+    }
+    
+    .page-personal .personal-header p {
+        text-align: center;
+        color: #ffffff;
+        margin-bottom: 0.1rem;
+    }
+    
+    .page-personal .personal-header .name {
+        font-size: 0.26rem;
+    }
+    
+    .page-personal .personal-header .grade {
+        font-size: 0.2rem;
+    }
+    
+    .page-personal .nav-list {
+        border-top: none;
+        margin-top: 0.2rem;
+        padding: 0 0.2rem;
+        background-color: #ffffff;
+    }
+    
+    .page-personal .nav-list .bui-btn {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
+    .page-personal .nav-list li:first-child {
+        border-top: none;
+    }
+    
+    .page-personal .nav-list .icon i {
+        font-size: 0.4rem;
+    }
+    
+    .page-personal .nav-list .icon {
+        height: 0.42rem;
+    }
+    
+    .page-personal .nav-list .bui-btn {
+        border: none;
+        border-top: 1px solid #efefef;
+    }
+    
+    .page-personal .icon-yellow {
+        color: #ffad03;
+    }
+    
+    .page-personal .icon-thinblue {
+        color: #56ced5;
+    }
+    
+    .page-personal .icon-green {
+        color: #6ed046;
+    }
+    
+    .page-personal .icon-red {
+        color: #fd8886;
+    }
+</style>
+<div class="bui-page page-personal">
+    <header class="bui-bar">
+        <div class="bui-bar-left">
+            <a class="bui-btn" onclick="bui.back();"><i class="icon-back"></i></a>
+        </div>
+        <div class="bui-bar-main">
+            添加key
+        </div>
+        <div class="bui-bar-right">
+            <!-- 右边按钮 -->
+        </div>
+    </header>
+    <main>
+        <ul class="bui-list contact-list">
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">exchange:</label>
+                <div class="span1">
+                    <div id="exchange" class="bui-select">-----请选择-----</div>
+                </div>              
+            </li>
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">APIKEY:</label>
+                <div class="span1">
+                    <div class="bui-input user-input">
+                        <input id="api_key"  type="text" value="" b-model="page.m.api_key" placeholder="请输入APIKEY"> 
+                    </div>
+                </div>            
+            </li>               
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">密钥:</label>
+                <div class="span1">
+                    <div class="bui-input user-input">
+                        <input id="secret"  type="number" value="" b-model="page.m.secret"  placeholder="请输入密钥"> 
+                    </div>
+                </div>                
+            </li> 
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">跟单倍数:</label>
+                <div class="span1">
+                    <div class="bui-input user-input">
+                        <input id="multiplier"  type="number"  b-model="page.m.multiplier"  placeholder="请输入跟单倍数"> 
+                    </div>
+                </div>              
+            </li>
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">traders:</label>
+                <div class="span1">
+                    <div id="traders" class="bui-select">-----请选择-----</div>
+                </div>              
+            </li>
+            
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">订单类型:</label>
+                <div>
+                    <div id="order_type" class="bui-select">-----请选择-----</div>
+                </div>               
+            </li>
+
+            <li class="bui-btn bui-box clearactive">
+                <label class="bui-label">买入浮动:</label>
+                <div class="span1">
+                    <div class="bui-input user-input">
+                        <input id="buy_float"  type="number" b-model="page.m.buy_float" placeholder=""> 
+                    </div>
+                </div>
+                <label class="bui-label">卖出浮动:</label>
+                <div class="span1">
+                    <div class="bui-input user-input">
+                        <input id="sell_float"  type="number" value="" b-model="page.m.sell_float"  placeholder=""> 
+                    </div>
+                </div>                
+            </li> 
+        </ul>
+        <li class="bui-btn bui-box clearactive">
+            <label class="bui-label">备注名称:</label>
+            <div class="span1">
+                <div class="bui-input user-input">
+                    <input id="nickname"  type="text" value="" b-model="page.m.nickname"  placeholder="请输入备注名称"> 
+                </div>
+            </div>                
+        </li> 
+
+        
+        <div style="padding: 10px 0 0px;"></div>
+
+        <div id="submit" class="bui-btn success">提交</div>
+        <div style="padding: 10px 0 0px;"></div>
+    </main>
+</div>

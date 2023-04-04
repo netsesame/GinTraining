@@ -1,0 +1,41 @@
+{
+  "distServer": {
+    "livereload": true,
+    "port": 5550
+  },
+  "devServer": {
+    "livereload": false,
+    "port": 5548
+  },
+  "qrcode": "/index.html",
+  "ignored": [
+    "!src/README.md",
+    "!src/preview.png"
+  ],
+  "proxy": {
+    "/api": {
+      "target": "http://154.211.21.219:5100/",
+      "changeOrigin": true,
+      "ssl": false,
+      "pathRewrite":{
+        "^/api":""
+      }
+    }
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "package": {
+    "uglify": true,
+    "folder": "pages",
+    "main": "pages/main/main"
+  },
+  "cleancss": false,
+  "autoprefixer": true,
+  "uglify": true,
+  "htmlmin": false,
+  "imagemin": false,
+  "license": "MIT"
+}
