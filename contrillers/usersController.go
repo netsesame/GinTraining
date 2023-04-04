@@ -3,7 +3,9 @@ package contrillers
 import (
 	"main/models"
 	"net/http"
+	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -66,4 +68,38 @@ func RegisterHandler(c *gin.Context) {
 	// }
 
 	c.JSON(http.StatusOK, gin.H{"token": "注册成功"})
+}
+
+// 登录接口
+func loginHandler(c *gin.Context) {
+	var loginRequest models.LoginRequest
+	if err := c.ShouldBindJSON(&loginRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// 验证用户名和密码
+	for _, user := range users {
+		if user.Username == loginRequest.Username && user.Password == loginRequest.Password {
+			// 生成JWT Token
+			expirationTime := time.Now().Add(24 * time.Hour) // Token有效期为24小时
+			claims := &models.Claims{
+				Username: loginRequest.Username,
+				StandardClaims: jwt.StandardClaims{
+					ExpiresAt: expirationTime.Unix(),
+				},
+			}
+			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+			//tokenString, err := token.SignedString(jwtSecret)
+			tokenString, err := token.SignedString(os.get(jwtSecret))
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			}
+			c.JSON(http.StatusOK, gin.H{"token": tokenString})
+			return
+		}
+	}
+
+	c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 }
