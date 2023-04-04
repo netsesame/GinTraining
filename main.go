@@ -2,6 +2,7 @@ package main
 
 import (
 	"main/contrillers"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,11 +13,21 @@ import (
 // 	initializers.SyncDatabase()
 // }
 
+//var staticFiles embed.FS
+
 func main() {
 	r := gin.Default()
+	// 将 / 路径映射到 static/src/index.html 文件
+	// 定义前端目录的路由
+	r.Static("/static", "./static/src")
+	//r.StaticFS("/static", http.FS(staticFiles))
 	r.POST("/signup", contrillers.RegisterHandler)
 
 	r.POST("/login", contrillers.LoginHandler)
+	// 定义重定向路由
+	r.GET("/", func(c *gin.Context) {
+		http.Redirect(c.Writer, c.Request, "/static", http.StatusMovedPermanently)
+	})
 
 	r.Run() // 监听并在 0.0.0.0:8080 上启动服务
 }
