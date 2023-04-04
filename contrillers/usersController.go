@@ -1,8 +1,10 @@
 package contrillers
 
 import (
+	"fmt"
 	"main/models"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -13,12 +15,12 @@ import (
 // 用户列表
 var users = []models.User{
 	{
-		Username: "user1",
-		Password: "password1",
+		Username: "11",
+		Password: "$2a$10$DpNjNVsDnPia1xp/Zq09Me9yf4lipAdm9zyT5kHxSU.XmkzWA2zrS",
 	},
 	{
-		Username: "user2",
-		Password: "password2",
+		Username: "33",
+		Password: "$2a$10$mXyrzcQ7EZfoggRLwqkPMu.z5L2BuTe7gXL7fFpxGmbEsrUZ5S/S2",
 	},
 }
 
@@ -51,7 +53,7 @@ func RegisterHandler(c *gin.Context) {
 	//添加到模拟数据库
 	addUserDb := models.User{Username: registerRequest.Username, Password: string(hash)}
 	users = append(users, addUserDb)
-
+	fmt.Println(users)
 	// // 生成JWT Token
 	// expirationTime := time.Now().Add(24 * time.Hour) // Token有效期为24小时
 	// claims := &models.Claims{
@@ -71,7 +73,7 @@ func RegisterHandler(c *gin.Context) {
 }
 
 // 登录接口
-func loginHandler(c *gin.Context) {
+func LoginHandler(c *gin.Context) {
 	var loginRequest models.LoginRequest
 	if err := c.ShouldBindJSON(&loginRequest); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -80,8 +82,11 @@ func loginHandler(c *gin.Context) {
 
 	// 验证用户名和密码
 	for _, user := range users {
-		if user.Username == loginRequest.Username && user.Password == loginRequest.Password {
+		// && user.Password == loginRequest.Password
+		fmt.Println("数据库里的用户名", user.Username, "前端输入用户名", loginRequest.Username)
+		if user.Username == loginRequest.Username {
 			// 生成JWT Token
+
 			expirationTime := time.Now().Add(24 * time.Hour) // Token有效期为24小时
 			claims := &models.Claims{
 				Username: loginRequest.Username,
@@ -91,12 +96,36 @@ func loginHandler(c *gin.Context) {
 			}
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 			//tokenString, err := token.SignedString(jwtSecret)
-			tokenString, err := token.SignedString(os.get(jwtSecret))
+			//在 JWT 中，签名密钥是一个字节数组，而不是字符串。因此，
+			//需要将字符串类型的签名密钥转换为字节数组类型。可以使用
+			//[]byte() 函数将字符串转换为字节数组。例如，如果签名密钥是一个名为 jwtSecret 的字符串变量，
+			//则可以使用 []byte(jwtSecret) 将其转换为字节数组类型。
+			tokenString, err := token.SignedString([]byte(os.Getenv("JWtSECRET")))
 			if err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 				return
 			}
-			c.JSON(http.StatusOK, gin.H{"token": tokenString})
+			c.SetSameSite(http.SameSiteDefaultMode)
+
+			cookieExpirationTime := time.Now().Add(24 * time.Hour)
+			cookie := &http.Cookie{
+				Name:     "Authorization",
+				Value:    tokenString,
+				Expires:  cookieExpirationTime,
+				HttpOnly: true,
+				SameSite: http.SameSiteDefaultMode,
+			}
+			c.SetCookie(
+				cookie.Name,
+				cookie.Value,
+				cookie.MaxAge,
+				cookie.Path,
+				cookie.Domain,
+				cookie.Secure,
+				cookie.HttpOnly,
+			)
+
+			c.JSON(http.StatusOK, gin.H{"token": tokenString, "UserName": loginRequest.Username})
 			return
 		}
 	}

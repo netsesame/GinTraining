@@ -15,5 +15,8 @@ import (
 func main() {
 	r := gin.Default()
 	r.POST("/signup", contrillers.RegisterHandler)
+
+	r.POST("/login", contrillers.LoginHandler)
+
 	r.Run() // 监听并在 0.0.0.0:8080 上启动服务
 }
