@@ -13,7 +13,8 @@ bui.ready(function() {
         scope: "app",
         data: {
             isLogin: false, // 用户的登录状态, 所有页面只需要控制 store.isLogin = false; 就会退出登录.                       
-            Host: "http://localhost:5550/api/", //调试
+            //Host: "http://localhost:5550/api/", //调试
+            Host: "http://127.0.0.1:8080/", //调试
             //Host: "/", //发布
         },
         methods: {
@@ -29,7 +30,7 @@ bui.ready(function() {
                 }
                 return false;
             },
-            
+
             insertLogin: function() {
                 uiLoginPage = bui.page({
                     url: "main",
@@ -40,24 +41,24 @@ bui.ready(function() {
 
                 // 登录成功以后执行关闭窗口及刷新操作
                 bui.on("loginsuccess", function(userinfo) {
-                     console.log('loginsuccess')
+                    console.log('loginsuccess')
                     store.isLogin = true;
                     bui.config.ajax = {
                         headers: {
-                            Authorization: "Bearer "+userinfo.token,
+                            Authorization: "Bearer " + userinfo.token,
                         }
-                    }   
+                    }
                     uiLoginPage.close();
-                   
-                     setTimeout(function(){
-                         bui.refresh();
-                     },500)
+
+                    setTimeout(function() {
+                        bui.refresh();
+                    }, 500)
                 })
             },
             bind: function() {
                 // 绑定页面的所有按钮有href跳转
                 bui.btn({ id: "#bui-router", handle: ".bui-btn" }).load();
- 
+
                 // 统一绑定页面所有的后退按钮
                 $("#bui-router").on("click", ".btn-back", function(e) {
                     // 支持后退多层,支持回调
@@ -74,23 +75,23 @@ bui.ready(function() {
                     // 如果有登录页历史
                     if (bui.history.get("main")) {
                         console.log('back main')
-                        // 后退到首页
+                            // 后退到首页
                         bui.back({
                             name: "pages/main/main"
                         })
                     } else {
                         console.log('insert main')
-                        // 插入登录页
+                            // 插入登录页
                         this.insertLogin();
                     }
-                }else{
+                } else {
                     var userinfo = storage.get("userinfo", 0);
-                    if (userinfo == undefined || !userinfo) {        
+                    if (userinfo == undefined || !userinfo) {
                         return false;
                     }
                     bui.config.ajax = {
                         headers: {
-                            Authorization: "Bearer "+userinfo.token,
+                            Authorization: "Bearer " + userinfo.token,
                         }
                     }
                 }
@@ -119,35 +120,35 @@ bui.ready(function() {
                         })
                     }
                     console.log(e.target.pid)
-                    // 防止webapp 可以直接跳转到某个页面, app 则没有这个问题
+                        // 防止webapp 可以直接跳转到某个页面, app 则没有这个问题
                     if (e.target.pid !== "main" && e.target.pid !== "pages/register/index" && !store.$data.isLogin) {
                         // 插入页面
                         store.insertLogin();
                     }
                 }
             });
-            
-            router.on("complete", function (e) {
+
+            router.on("complete", function(e) {
                 var storage = bui.storage();
                 var userinfo = storage.get("userinfo", 0);
-                if (userinfo == undefined || !userinfo) {        
+                if (userinfo == undefined || !userinfo) {
                     return false;
                 }
                 bui.config.ajax = {
                     headers: {
-                        Authorization: "Bearer "+userinfo.token,
+                        Authorization: "Bearer " + userinfo.token,
 
                     }
-                }                
-                return true;        
-             })
+                }
+                return true;
+            })
 
-                         // 绑定页面跳转
+            // 绑定页面跳转
             this.bind();
 
             // 每个页面的权限
             that.checkLogin();
-             
+
         }
     })
 })
