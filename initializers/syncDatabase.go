@@ -1,9 +1,9 @@
 package initializers
 
-import "main/models"
+// import "main/models"
 
-func SyncDatabase() {
+// func SyncDatabase() {
 
-	DB.AutoMigrate(&models.User{})
+// 	DB.AutoMigrate(&models.User{})
 
-}
+// }

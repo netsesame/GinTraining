@@ -71,15 +71,17 @@ loader.define(function(require, exports, module) {
                 // 可选参数
                 method: "POST"
             }).then(function(result) {
-                console.log(result)
-                console.log(result.code)
+                console.log("请求成功的", result)
+                console.log("请求成功的", )
                     //storage.set("userinfo", result);
-                if (result && result.code != 200) {
-                    bui.alert(result.msg);
-                    return;
-                }
+                    // if (result && result.status != 200) {
+                    //     bui.alert(result.response);
+                    //     return;
+                    // }
 
-                if (result && result.code == 200) {
+                if (result && result.token) {
+                    console.log("成功了？", result)
+                    console.log("这个是什么参数")
                     store.isLogin = true;
                     // 保存本地信息, 应该保存 result 信息, 一般里面会包含token
                     storage.set("userinfo", result.data);
@@ -94,8 +96,9 @@ loader.define(function(require, exports, module) {
                     }
                 }
                 // 成功
-            }, function(result, status) {
-                console.log(result, status);
+            }, function(result) {
+                console.log("输出异步请求返回的错误信息", result, result.status); //输出异步请求返回的错误信息
+                bui.alert(result.response); // 输出异步请求的状态码
             });
         })
     }
