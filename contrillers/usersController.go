@@ -88,12 +88,14 @@ func LoginHandler(c *gin.Context) {
 			// 生成JWT Token
 
 			expirationTime := time.Now().Add(24 * time.Hour) // Token有效期为24小时
+			// 创建一个我们自己的声明
 			claims := &models.Claims{
-				Username: loginRequest.Username,
+				Username: loginRequest.Username, // 自定义字段
 				StandardClaims: jwt.StandardClaims{
 					ExpiresAt: expirationTime.Unix(),
 				},
 			}
+			// 使用指定的签名方法创建签名对象
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 			//tokenString, err := token.SignedString(jwtSecret)
 			//在 JWT 中，签名密钥是一个字节数组，而不是字符串。因此，
@@ -125,10 +127,26 @@ func LoginHandler(c *gin.Context) {
 				cookie.HttpOnly,
 			)
 
-			c.JSON(http.StatusOK, gin.H{"token": tokenString, "UserName": loginRequest.Username})
+			data := models.LoginResponse{
+				Token:    tokenString,
+				Username: loginRequest.Username,
+			}
+
+			c.JSON(http.StatusOK, gin.H{"code": 200, "msg": "Success", "data": data})
 			return
 		}
 	}
 
 	c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
+}
+
+// 客户端携带Token有三种方式 1.放在请求头 2.放在请求体 3.放在URI
+// 这里假设Token放在Header的Authorization中，并使用Bearer开头
+// 这里的具体实现方式要依据你的实际业务情况决定
+
+func Validate(c *gin.Context) {
+	dataTab, _ := c.Get("data")
+	c.JSON(http.StatusOK, gin.H{
+		"message": dataTab,
+	})
 }

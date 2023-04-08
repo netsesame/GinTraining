@@ -2,6 +2,7 @@ package main
 
 import (
 	"main/contrillers"
+	"main/middleware"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,7 @@ func main() {
 	r.POST("/signup", contrillers.RegisterHandler)
 
 	r.POST("/login", contrillers.LoginHandler)
+	r.GET("/validate", middleware.ReqireAuth, contrillers.Validate)
 	// 定义重定向路由
 	r.GET("/", func(c *gin.Context) {
 		http.Redirect(c.Writer, c.Request, "/static", http.StatusMovedPermanently)

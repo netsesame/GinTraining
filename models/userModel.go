@@ -35,3 +35,9 @@ type Claims struct {
 	Username string `json:"username"`
 	jwt.StandardClaims
 }
+
+// 登录返回的结构体
+type LoginResponse struct {
+	Token    string `json:"token"`
+	Username string `json:"username"`
+}
