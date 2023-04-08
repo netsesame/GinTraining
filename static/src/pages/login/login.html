@@ -1,14 +1,54 @@
-
 <style>
-.login-page main{
-background: #fff url(images/login/login-bg.png) center bottom no-repeat;
-    background-size: 100% auto;
+    /* Google Fonts */
     
-}
-.login-page .logo h1{
-    font-size: .82rem;
-    padding-left: .3rem;
-} 
+    @import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
+    /* Cursor */
+    
+    .cursor {
+        position: relative;
+        width: 24em;
+        margin: 0 auto;
+        border-right: 2px solid rgba(255, 255, 255, .75);
+        font-size: 15;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        transform: translateY(-50%);
+    }
+    /* Animation */
+    
+    .typewriter-animation {
+        animation: typewriter 5s steps(50) 1s 1 normal both, blinkingCursor 500ms steps(50) infinite normal;
+    }
+    
+    @keyframes typewriter {
+        from {
+            width: 0;
+        }
+        to {
+            width: 100%;
+        }
+    }
+    
+    @keyframes blinkingCursor {
+        from {
+            border-right-color: rgba(255, 255, 255, .75);
+        }
+        to {
+            border-right-color: transparent;
+        }
+    }
+    
+    .login-page main {
+        background: #fff url(images/login/login-bg.png) center bottom no-repeat;
+        background-size: 100% auto;
+    }
+    
+    .login-page .logo h1 {
+        font-size: .82rem;
+        padding-left: .3rem;
+    }
+    
     .login-page .logo {
         height: 2rem;
         margin: 1.2rem auto 1rem auto;
@@ -36,7 +76,6 @@ background: #fff url(images/login/login-bg.png) center bottom no-repeat;
     .login-page .login-form .bui-btn-text {
         margin-bottom: .2rem;
     }
-    
     
     .login-page .login-form .bui-label {
         width: 0.5rem;
@@ -76,36 +115,39 @@ background: #fff url(images/login/login-bg.png) center bottom no-repeat;
         content: "\e67f"
     }
 </style>
-<div class="bui-page bui-box-vertical login-page">
-        <main>
-            <div class="logo bui-box-center">
-              <img src="images/logo.png" alt="" width="50px" height="50px">&nbsp;<h2>KEY管理库</h2>
-            </div>
-            <div class="login-form">
-                <ul class="bui-list">
-                    <li class="bui-btn bui-box clearactive">
-                        <label class="bui-label" for="user"><i class="icon-face"></i></label>
-                        <div class="span1">
-                            <div class="bui-input user-input">
-                                <input id="username" type="text" placeholder="用户名">
-                            </div>
-                        </div>
-                    </li>
-                    <li class="bui-btn bui-box clearactive">
-                        <label class="bui-label" for="password"><i class="icon-lock"></i></label>
-                        <div class="span1">
-                            <div class="bui-input password-input">
-                                <input id="password" type="password" placeholder="密码">
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <div class="bui-btn round primary" id="login">登录</div>
 
-                <div style="padding-top:10px;display: none;">
-                    <div class="bui-btn round " id="register">注册</div>
-                </div>
+<div class="bui-page bui-box-vertical login-page">
+    <main>
+        <div class="logo bui-box-center">
+            <img src="images/logo.png" alt="" width="50px" height="50px">&nbsp;
+            <h2>KEY管理库</h2>
+        </div>
+        <div class="login-form">
+            <ul class="bui-list">
+                <li class="bui-btn bui-box clearactive">
+                    <label class="bui-label" for="user"><i class="icon-face"></i></label>
+                    <div class="span1">
+                        <div class="bui-input user-input">
+                            <input id="username" type="text" placeholder="用户名">
+                        </div>
+                    </div>
+                </li>
+                <li class="bui-btn bui-box clearactive">
+                    <label class="bui-label" for="password"><i class="icon-lock"></i></label>
+                    <div class="span1">
+                        <div class="bui-input password-input">
+                            <input id="password" type="password" placeholder="密码">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="bui-btn round primary" id="login">登录</div>
+
+            <div style="padding-top:10px;display: none;">
+                <div class="bui-btn round " id="register">注册</div>
             </div>
-        </main>
-    </div>
-    
+            <p class="cursor typewriter-animation">Hi there, Wecome!!</p>
+        </div>
+    </main>
+
+</div>
