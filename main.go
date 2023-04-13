@@ -26,6 +26,8 @@ func main() {
 
 	r.POST("/login", contrillers.LoginHandler)
 	r.GET("/validate", middleware.ReqireAuth, contrillers.Validate)
+	r.GET("/exchanges", middleware.ReqireAuth, contrillers.GetExchangesHandler)
+
 	// 定义重定向路由
 	r.GET("/", func(c *gin.Context) {
 		http.Redirect(c.Writer, c.Request, "/static", http.StatusMovedPermanently)
