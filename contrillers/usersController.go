@@ -150,3 +150,10 @@ func Validate(c *gin.Context) {
 		"message": dataTab,
 	})
 }
+
+//返回支持的全部交易所JSON
+func GetExchangesHandler(c *gin.Context) {
+	exchanges := []string{"Binance", "Coinbase", "Kraken", "Huobi", "Bitfinex"} // 假设支持这些交易所
+	c.JSON(http.StatusOK, gin.H{"code": 200, "msg": "Success", "data": exchanges})
+}
+
